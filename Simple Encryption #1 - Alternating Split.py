@@ -47,11 +47,12 @@ def dealternet(encrypted_text):
     # print(''.join([b[i] + a[i] for i in range(0, len(a))])[:-1])
     if len(encrypted_text) % 2 == 1:
         a.append(a[-1])
-    return ''.join([b[i] + a[i] for i in range(0, len(a))])[:-1]
-
-
+        return ''.join([b[i] + a[i] for i in range(0, len(a))])[:-1]
+    else :
+        return ''.join([b[i] + a[i] for i in range(0, len(a))])
 
 def encrypt(text, n):
+    m = max((n // abs(n) if n != 0 else 0) * (n % 4), 0)
     if n<= 0:
         return text
     elif n>= 1:
@@ -61,6 +62,7 @@ def encrypt(text, n):
         return alternet(text)
 
 def decrypt(encrypted_text, n):
+    m = max((n // abs(n) if n != 0 else 0) * (n % 4), 0)
     if n> 1:
         # print(m, "======", dealternet(encrypted_text))
         return decrypt(dealternet(encrypted_text), n - 1)
@@ -69,6 +71,18 @@ def decrypt(encrypted_text, n):
     elif n== 1:
         # print(m, "######", dealternet(encrypted_text))
         return dealternet(encrypted_text)
+
+'''
+ HLM'[E
+   n=332
+"HL'[E" should equal "L'EHM["
+'''
+
+print(encrypt("HLM'[E", 332), "EEE","L'EHM[")
+print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+print(decrypt("HLM'[E", 332),"DDD", "L'EHM[")
+pass
+# s eT ashi tist!
 
 
 print(encrypt("This is a test!", 0), "This is a test!")
@@ -82,11 +96,6 @@ print(decrypt("hsi  etTi sats!", 1), "This is a test!")
 print(decrypt("s eT ashi tist!", 2), "This is a test!")
 print(decrypt(" Tah itse sits!", 3), "This is a test!")
 print(decrypt("This is a test!", 4), "This is a test!")
-pass
-# s eT ashi tist!
-
-
-
 
 
 
