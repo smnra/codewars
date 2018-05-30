@@ -32,15 +32,15 @@ print(high('take me to semynak'), 'semynak')
 
 def high(x):
     wordList = x.split(" ")
-    scores = list(range(len(wordList)))
-    max = 0
+    scores = [0]*len(wordList)
+    maxscore = 0
     maxIndex = 0
     for i,word in enumerate(wordList) :
         for s in word :
             scores[i] = scores[i] + (ord(s) - 96)
-        if scores[i] >= max :
+        if scores[i] > maxscore :
             maxIndex = i
-            max = scores[i]
+            maxscore = scores[i]
     return wordList[maxIndex]
 
 
@@ -56,13 +56,9 @@ def strScore(x):
     return str
 
 
-print(strScore('kuexvxtsw'), strScore('hyycbpxyxq'))
-print(strScore('vrhnqusr'), strScore('axqjlmyqs'))
-print(strScore('tltbjonz'), strScore('lsbsaotgz'))
-
-print(high('kuexvxtsw hyycbpxyxq'), 'hyycbpxyxq')
-print(high('vrhnqusr axqjlmyqs'), 'axqjlmyqs')
-print(high('tltbjonz lsbsaotgz'), 'lsbsaotgz')
+print("ba",strScore("ba"))
+print("aaa",strScore("aaa"))
+print(high("ba aaa"))
 
 
 
