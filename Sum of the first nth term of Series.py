@@ -42,7 +42,7 @@ def series_sum1(n):
 
 
 def series_sum(n):
-        return "{:.2f}".format(sum([1/(i*3-2) for i in range(1,n+1)])) or "0.00"
+        return "{:.2f}".format(sum([1/(i*3-2) for i in range(1,n+1)]))
 
 
 
