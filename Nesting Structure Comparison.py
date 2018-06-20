@@ -34,16 +34,15 @@ Test.assert_equals(same_structure_as([1,[1,1]],[[2,2],2]), False, "[1,[1,1]] not
 
 def same_structure_as(original,other):
     for i in range(len(original)):
-        if type(original[i])==type(other[i])==type([]):
-            return same_structure_as(original[i],other[i])
-        elif type(original[i])!=type([]) or type(other[i])!=type([]):
-            return False
-
-
-    type(original[i])!=type([]) and type(other[i])!=type([]):
+        if type(original[i])==type([]):
+            if type(other[i])==type([]): return same_structure_as(original[i], other[i])
+            else: return  False
+        else:
+            if type(other[i])==type([]): return False
 
     return True
 
+print(same_structure_as([[[], []]], [[1, 1]]),False)
 
 print(same_structure_as([ 1, [ 1, 1 ] ], [ 2, [ 2, 2 ] ] ),True)
 print(same_structure_as([1,[1,1]],[2,[2,2]]), True)
