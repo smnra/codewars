@@ -42,6 +42,7 @@ def same_structure_as(original,other):
             if type(other[i])==type([]): return False
     return True
 
+
 print(same_structure_as([],1), False)
 print(same_structure_as([1,[1,1]],[2,[2]]), False)
 
