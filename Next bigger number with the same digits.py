@@ -51,7 +51,7 @@ def next_bigger(n):
             if n[-i-1] > n[-i-2]:
                 tmpList = n[-i-2:]
                 optList = list(permutations(tmpList, len(tmpList)))
-                optList.sort(key=lambda x : x[0])
+                optList.sort(key=lambda x : int("".join(x)))
                 for m in optList:
                     if int("".join(tmpList)) < int("".join(m)):
                         return  "".join(n).replace("".join(n[-i-2:]),"".join(m))
