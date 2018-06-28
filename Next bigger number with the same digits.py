@@ -43,7 +43,6 @@ def next_bigger1(n):
 
 
 from itertools import permutations
-
 def next_bigger(n):
     n = list(str(n))
     if len(n)>=2:
@@ -54,12 +53,17 @@ def next_bigger(n):
                 optList.sort(key=lambda x : int("".join(x)))
                 for m in optList:
                     if int("".join(tmpList)) < int("".join(m)):
-                        return  "".join(n).replace("".join(n[-i-2:]),"".join(m))
+                        return int("".join(n[:-i-2] + list(m)))
     return -1
 
 
 
 
+
+
+print(next_bigger(3636),3663)
+print(next_bigger(128068436906),128068436960)
+print(next_bigger(35719374341818),35719374341881)
 
 
 
