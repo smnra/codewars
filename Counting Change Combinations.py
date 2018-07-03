@@ -32,6 +32,7 @@ test.assert_equals(0, count_change(11, [5,7]))
 
 """
 from itertools import *
+import timeit
 
 def count_change1(money, coins):
     coins.sort()
@@ -79,27 +80,69 @@ def count_change4(money, coins):
 
 
 
-from itertools import combinations_with_replacement
-def count_change(money, coins):
+
+def count_change5(money, coins):
         combs = []
         for n in range(money//max(coins), money//min(coins)+1):  # 解决方案中有可能有n个元素,n 为 money//coins[0] 到 money//coins[-1]
             combs = combs + [comb for comb in set(combinations_with_replacement(coins, n)) if sum(comb) == money]
         return len(combs)
 
 
-
-    #
-print(3, count_change(4, [1,2]))
-print(4, count_change(10, [5,2,3]))
-print(0, count_change(11, [5,7]))
+def count_change(money, coins):
+    coins.sort()
 
 
-print(count_change(40, [1,5,2,3]))
+    def pos(value,list):
+        '''
+        此函数使用查找 list 列表中上一个小于或等于value的 元素的索引
+        :param value: 数值
+        :param list: 数值
+        :return: list 的 索引
+        '''
+        list.append(value)
+        if value==list[-1]: index = -1
+        else: index = list.sort().index(value)
+        return index
+
+
+
+    for gongNWei in range(money // max(coins), money // min(coins) + 1):  # 解决方案中的列表中有可能有n个元素,n 为 money//coins[0] 到 money//coins[-1]
+        result = []
+        tempCoins = list(coins)  # 复制一份coins
+        for n in range(len(gongNWei)):  # 当解决方案中的列表中的元素为 gongNWei 位时, 遍历解决方案中的列表的每一个元素 元素索引为 n
+            result.append(tempCoins[n])  # 将 tempCoins 的第1 个元素 添加到 result 列表中
+            a = pos(tempCoins[n], tempCoins)  # 确定 可能是第 n 位的数字 的 列表的开始 索引
+            b = pos(money - sum(result), tempCoins)  # 确定 可能是第 n 位的数字 的 列表的结束 索引
+            for diNWei in tempCoins[a:b + 1]:  # 遍历 可能是第 n 位的数字的列表
+                if (money - sum(result) - diNWei) >= diNWei:  # 如果  money 减去sum(resule) 再 减去 diNWei 大于 下一个最小元素
+                    pass
+        return 0
 
 
 
 
 
+"""
+10
+[2,3,4,5,6,7,8,9]
 
+[2,8] [3,7] [4,6] ,[5,5]
+[2,2,6] [2,3,5] [2,4,4] [3,3,4]
+[2,2,2,4] [2,2,3,3]
+[2,2,2,2,2]
+
+
+"""
+
+start = timeit.default_timer()
+print(count_change5(10, [2,3,4,5,6,7,8,9]))
+end = timeit.default_timer()
+print(str(end-start))
+
+
+start = timeit.default_timer()
+print(count_change5(60, [1,5,2,3]))
+end = timeit.default_timer()
+print(str(end-start))
 
 
