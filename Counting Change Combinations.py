@@ -89,40 +89,11 @@ def count_change5(money, coins):
 
 
 def count_change(money, coins):
-    coins.sort(reverse = True)       # coins 降序
+    if money<0: return 0
+    if money==0: return 1
+    if money>=0 and not coins: return 0
+    return count_change(money-coins[-1],coins) + count_change(money,coins[:-1])
 
-    def pos(value,tlist):
-        '''
-        此函数使用查找 list 列表中上一个小于或等于value的 元素的索引
-        :param value: 数值
-        :param list: 数值
-        :return: list 的 索引
-        '''
-        temp = list(tlist)
-        temp.append(value)
-        if value==temp[-1]: index = -1
-        else: index = temp.index(value)
-        return index
-
-    def getsd(tmpMoney,tmpCoins):
-        maxCoin = pos(coin, tmpCoins)
-        tmpMoney = tmpMoney - maxCoin
-        for coinMod in tmpCoins:  # 硬币的面值列表 降序
-            modValue = tmpMoney % coinMod
-            if modValue > tmpCoins[-1]:
-                return getsd(tmpMoney,tmpCoins)
-            elif modValue in tmpCoins:
-                result.append(coinMod)
-            elif modValue==0:
-                result.append(coinMod)
-                return coinMod
-    tmpMoney = money
-    tmpCoins = coins
-    result = []
-    results = []
-    for coin in coins:       #硬币的面值列表 降序
-        for coinMod in coins:  # 硬币的面值列表 降序
-            print(getsd(tmpMoney,tmpCoins))
 
 """
 10,[2,3,4,5,6,7,8,9]
@@ -147,9 +118,6 @@ end = timeit.default_timer()
 print(str(end-start))
 
 
-start = timeit.default_timer()
-print(count_change(60, [1,5,2,3]))
-end = timeit.default_timer()
-print(str(end-start))
-
-
+print(3, count_change(4, [1,2]))
+print(4, count_change(40, [5,2,3]))
+print(0, count_change(11, [5,7]))
