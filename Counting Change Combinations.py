@@ -89,59 +89,66 @@ def count_change5(money, coins):
 
 
 def count_change(money, coins):
-    coins.sort()
+    coins.sort(reverse = True)       # coins 降序
 
-
-    def pos(value,list):
+    def pos(value,tlist):
         '''
         此函数使用查找 list 列表中上一个小于或等于value的 元素的索引
         :param value: 数值
         :param list: 数值
         :return: list 的 索引
         '''
-        list.append(value)
-        if value==list[-1]: index = -1
-        else: index = list.sort().index(value)
+        temp = list(tlist)
+        temp.append(value)
+        if value==temp[-1]: index = -1
+        else: index = temp.index(value)
         return index
 
-
-
-    for gongNWei in range(money // max(coins), money // min(coins) + 1):  # 解决方案中的列表中有可能有n个元素,n 为 money//coins[0] 到 money//coins[-1]
-        result = []
-        tempCoins = list(coins)  # 复制一份coins
-        for n in range(len(gongNWei)):  # 当解决方案中的列表中的元素为 gongNWei 位时, 遍历解决方案中的列表的每一个元素 元素索引为 n
-            result.append(tempCoins[n])  # 将 tempCoins 的第1 个元素 添加到 result 列表中
-            a = pos(tempCoins[n], tempCoins)  # 确定 可能是第 n 位的数字 的 列表的开始 索引
-            b = pos(money - sum(result), tempCoins)  # 确定 可能是第 n 位的数字 的 列表的结束 索引
-            for diNWei in tempCoins[a:b + 1]:  # 遍历 可能是第 n 位的数字的列表
-                if (money - sum(result) - diNWei) >= diNWei:  # 如果  money 减去sum(resule) 再 减去 diNWei 大于 下一个最小元素
-                    pass
-        return 0
-
-
-
-
+    def getsd(tmpMoney,tmpCoins):
+        maxCoin = pos(coin, tmpCoins)
+        tmpMoney = tmpMoney - maxCoin
+        for coinMod in tmpCoins:  # 硬币的面值列表 降序
+            modValue = tmpMoney % coinMod
+            if modValue > tmpCoins[-1]:
+                return getsd(tmpMoney,tmpCoins)
+            elif modValue in tmpCoins:
+                result.append(coinMod)
+            elif modValue==0:
+                result.append(coinMod)
+                return coinMod
+    tmpMoney = money
+    tmpCoins = coins
+    result = []
+    results = []
+    for coin in coins:       #硬币的面值列表 降序
+        for coinMod in coins:  # 硬币的面值列表 降序
+            print(getsd(tmpMoney,tmpCoins))
 
 """
-10
-[2,3,4,5,6,7,8,9]
+10,[2,3,4,5,6,7,8,9]
 
-[2,8] [3,7] [4,6] ,[5,5]
-[2,2,6] [2,3,5] [2,4,4] [3,3,4]
-[2,2,2,4] [2,2,3,3]
-[2,2,2,2,2]
-
+[8,2]
+[7,3]
+[6,4]
+[6,2,2]
+[5,5]
+[5,3,2]
+[4,4,2]
+[4,3,3]
+[4,2,2,2]
+[3,3,2,2]
+[2,2,2,2]
 
 """
 
 start = timeit.default_timer()
-print(count_change5(10, [2,3,4,5,6,7,8,9]))
+print(count_change(10, [2,3,4,5,6,7,8,9]))
 end = timeit.default_timer()
 print(str(end-start))
 
 
 start = timeit.default_timer()
-print(count_change5(60, [1,5,2,3]))
+print(count_change(60, [1,5,2,3]))
 end = timeit.default_timer()
 print(str(end-start))
 
